@@ -22,6 +22,9 @@
     <button @click="toggleCapture" :class="{ active: isCapturing }">
       {{ isCapturing ? '停止抓取' : '开始抓取' }}
     </button>
+    <button @click="initURL">
+      initURL
+    </button>
     <input v-model="updateInterval" type="number" min="100" max="5000" step="100" placeholder="更新间隔(ms)">
     <p v-if="error" class="error">{{ error }}</p>
   </div>
@@ -127,6 +130,14 @@ export default {
       } else {
         this.startCapture()
       }
+    },
+    async initURL(){
+    try{
+      const response = await fetch(`http://localhost:3001/api/init_url?url=${encodeURIComponent(this.targetURL)}`);
+      console.log("init__")
+    }catch (e) {
+      return { success: false, error: e.message };
+    }
     }
   },
   
